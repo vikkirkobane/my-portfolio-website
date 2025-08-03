@@ -1,7 +1,7 @@
 ---
 
 <p align="center" width="100%">
-    <img height="100" src="https://github.com/yourusername/yourportfolio/assets/logo.png">
+    <img height="100" src="https://github.com/vikkirkobane/my-portfolio-website/assets/app/logo.jpg">
 </p>
 
 ---
