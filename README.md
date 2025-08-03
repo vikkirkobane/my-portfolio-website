@@ -1,7 +1,7 @@
 ---
 
 <p align="center" width="100%">
-    <img height="100" src="https://github.com/vikkirkobane/my-portfolio-website/app/assets/logo.jpg">
+    <img height="100" src="https://drive.google.com/file/d/16xmR9Iw4iB--ZPJ5NoPp2_6My14wjclX/view?usp=drivesdk">
 </p>
 
 ---
