@@ -107,7 +107,7 @@ const ChatWidget = () => {
         <div className="fixed bottom-24 right-5 w-[350px] h-[500px] bg-white rounded-xl shadow-lg flex flex-col z-[1000] overflow-hidden">
           {/* Header */}
           <div className="bg-[#854fff] text-white p-5 font-bold flex justify-between items-center text-lg">
-            <span>Chat</span>
+            <span>Victor's Assistant</span>
             <button 
               onClick={closeChat} 
               className="text-white bg-transparent border-none cursor-pointer"
