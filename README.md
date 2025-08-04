@@ -18,7 +18,7 @@ Welcome to my professional portfolio – a dynamic, full-stack platform that sho
 ## 🔥 Key Features
 
 - **AI Chatbot Assistant** (OpenAI & Gemini):
-  Engage with a smart chatbot trained specifically on the content of my portfolio. Built using N8N and Google AI Studio, it understands only what's in the app—no off-topic noise. Supports code snippets, markdown, and real-time streaming output.
+  Engage with a smart chatbot trained specifically on the content of my portfolio and schedule meetings and appointments. Built using N8N and Google AI Studio, it understands only what's in the app, no off-topic noise. Supports code snippets, markdown, and real-time streaming output.
 
 - **Chatbot UI Enhancements**:
   - Scroll-activated chat icon using Framer Motion
@@ -168,7 +168,7 @@ This is a high-level overview of the project's directory structure.
 
 ## 🤔 What does the portfolio website offer?
 
- * AI Chat Assistant: The core feature that interacts with users to provide information about my projects, skills, and experience.
+ * AI Chat Assistant: The core feature that interacts with users to provide information about my projects, skills, experience and schedule appointments or meetings through the Google Suite.
  * Next.js App Router: The project utilizes the modern Next.js App Router for server-side rendering and efficient routing.
  * Modular Components: The components folder houses reusable UI elements, ensuring a clean and maintainable codebase.
  * Static Asset Management: The public directory is used for all static images and SVGs, which are optimized for delivery.
