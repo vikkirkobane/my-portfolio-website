@@ -69,7 +69,7 @@ const ChatWidget = () => {
       
       // Remove markdown from bot response
       const cleanResponse = removeMarkdown(
-        data.output || "Sorry, I couldn't understand that."
+        data.system_message || "Sorry, I couldn't understand that."
       );
       
       setMessages(prev => [
