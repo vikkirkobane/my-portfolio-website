@@ -1,5 +1,5 @@
+// components/homepage/contact/ContactForm.jsx
 "use client";
-// @flow strict
 import { isValidEmail } from "@/utils/check-email";
 import axios from "axios";
 import { useState } from "react";
@@ -24,30 +24,59 @@ function ContactForm() {
   const handleSendMail = async (e) => {
     e.preventDefault();
 
+    // Reset errors
+    setError({ email: false, required: false });
+
+    // Validate required fields
     if (!userInput.email || !userInput.message || !userInput.name) {
       setError({ ...error, required: true });
+      toast.error("Please fill in all required fields.");
       return;
-    } else if (error.email) {
+    }
+
+    // Validate email format
+    if (!isValidEmail(userInput.email)) {
+      setError({ ...error, email: true });
+      toast.error("Please provide a valid email address.");
       return;
-    } else {
-      setError({ ...error, required: false });
-    };
+    }
 
     try {
       setIsLoading(true);
       const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_APP_URL}/api/contact`,
-        userInput
+        `/api/contact`,
+        userInput,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          timeout: 10000, // 10 second timeout
+        }
       );
 
-      toast.success("Message sent successfully!");
-      setUserInput({
-        name: "",
-        email: "",
-        message: "",
-      });
+      if (res.data.success) {
+        toast.success(res.data.message || "Message sent successfully!");
+        setUserInput({
+          name: "",
+          email: "",
+          message: "",
+        });
+      } else {
+        toast.error(res.data.message || "Failed to send message. Please try again.");
+      }
     } catch (error) {
-      toast.error(error?.response?.data?.message);
+      console.error("Contact form error:", error);
+      
+      if (error.response) {
+        // Server responded with an error status
+        toast.error(error.response.data?.message || "Failed to send message. Please try again.");
+      } else if (error.request) {
+        // Request was made but no response received
+        toast.error("No response from server. Please check your connection and try again.");
+      } else {
+        // Something else happened
+        toast.error("An unexpected error occurred. Please try again.");
+      }
     } finally {
       setIsLoading(false);
     };
@@ -60,7 +89,7 @@ function ContactForm() {
         <p className="text-sm text-[#d3d8e8]">{"If you have any questions or would like to discuss a potential opportunity, feel free to reach out. I'm actively exploring new roles and collaborations that align with my skills, values, and passion for building impactful solutions. Let’s connect and see how we can work together."}</p>
         <div className="mt-6 flex flex-col gap-4">
           <div className="flex flex-col gap-2">
-            <label className="text-base">Your Name: </label>
+            <label className="text-base">Your Name: *</label>
             <input
               className="bg-[#10172d] w-full border rounded-md border-[#353a52] focus:border-[#16f2b3] ring-0 outline-0 transition-all duration-300 px-3 py-2"
               type="text"
@@ -69,11 +98,12 @@ function ContactForm() {
               onChange={(e) => setUserInput({ ...userInput, name: e.target.value })}
               onBlur={checkRequired}
               value={userInput.name}
+              disabled={isLoading}
             />
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-base">Your Email: </label>
+            <label className="text-base">Your Email: *</label>
             <input
               className="bg-[#10172d] w-full border rounded-md border-[#353a52] focus:border-[#16f2b3] ring-0 outline-0 transition-all duration-300 px-3 py-2"
               type="email"
@@ -85,12 +115,13 @@ function ContactForm() {
                 checkRequired();
                 setError({ ...error, email: !isValidEmail(userInput.email) });
               }}
+              disabled={isLoading}
             />
             {error.email && <p className="text-sm text-red-400">Please provide a valid email!</p>}
           </div>
 
           <div className="flex flex-col gap-2">
-            <label className="text-base">Your Message: </label>
+            <label className="text-base">Your Message: *</label>
             <textarea
               className="bg-[#10172d] w-full border rounded-md border-[#353a52] focus:border-[#16f2b3] ring-0 outline-0 transition-all duration-300 px-3 py-2"
               maxLength="500"
@@ -100,15 +131,15 @@ function ContactForm() {
               onBlur={checkRequired}
               rows="4"
               value={userInput.message}
+              disabled={isLoading}
             />
           </div>
           <div className="flex flex-col items-center gap-3">
             {error.required && <p className="text-sm text-red-400">
-              All fiels are required!
+              All fields are required!
             </p>}
             <button
-              className="flex items-center gap-1 hover:gap-3 rounded-full bg-gradient-to-r from-pink-500 to-violet-600 px-5 md:px-12 py-2.5 md:py-3 text-center text-xs md:text-sm font-medium uppercase tracking-wider text-white no-underline transition-all duration-200 ease-out hover:text-white hover:no-underline md:font-semibold"
-              role="button"
+              className="flex items-center gap-1 hover:gap-3 rounded-full bg-gradient-to-r from-pink-500 to-violet-600 px-5 md:px-12 py-2.5 md:py-3 text-center text-xs md:text-sm font-medium uppercase tracking-wider text-white no-underline transition-all duration-200 ease-out hover:text-white hover:no-underline md:font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
               onClick={handleSendMail}
               disabled={isLoading}
             >

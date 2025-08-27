@@ -9,12 +9,19 @@ import Projects from "./components/homepage/projects";
 import Education from "./components/homepage/education";
 import ContactSection from "./components/homepage/contact";
 import ChatWidget from "./components/ChatWidget";
+import ToastWrapper from "./components/ToastWrapper";
 
 // Dynamically import components that use browser APIs
 import dynamic from "next/dynamic";
 const Experience = dynamic(() => import("./components/homepage/experience"), { ssr: false });
 const Blog = dynamic(() => import("./components/homepage/blog"), { ssr: false });
 const ScrollToTop = dynamic(() => import("./components/helper/scroll-to-top"), { ssr: false });
+
+// const ToastContainer = dynamic(
+//   () => import('react-toastify').then((mod) => mod.ToastContainer),
+//   { ssr: false }
+// );
+
 
 export default function Home() {
   const [blogs, setBlogs] = useState([]);
@@ -60,6 +67,7 @@ export default function Home() {
       </main>
       <ChatWidget />
       <ScrollToTop />
+      <ToastWrapper />
     </div>
   );
 }
